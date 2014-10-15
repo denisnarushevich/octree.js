@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <title></title>
+    <script data-main="boxes" type="text/javascript" src="require.js"></script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            border: 0px;
+        }
+
+        html {
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        canvas {
+            display: block;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        #debug {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 40px;
+            background: #ddd;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+<div id="debug">
+    checks: <div id="checkcount"></div>
+</div>
+<canvas id="canvas" width="1000" height="1000"></canvas>
+</body>
+</html>

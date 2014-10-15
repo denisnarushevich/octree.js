@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
+    <title></title>
+    <script data-main="bench" type="text/javascript" src="require.js"></script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            border: 0px;
+        }
+
+        html {
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        canvas {
+            display: block;
+            height: 1000px;
+            width: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        body > div {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            width: 100%;
+            height: 240px;
+            margin: -120px 0px 0px 0px;
+        }
+
+        body > div > div {
+            width: 1200px;
+            height: 240px;
+            margin: 0 auto;
+        }
+
+        .button {
+            width: 320px;
+            height: 240px;
+            margin: 0px 38px;
+            background: #ccc;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            box-shadow: 2px 2px 2px #aaa;
+            float: left;
+            line-height: 240px;
+            text-align: center;
+            font-size: 32pt;
+            font-family: arial;
+            color: #777;
+        }
+
+        .button:hover {
+            color: #333;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <div class="button" id="insertButton">
+            Test 50k insert
+        </div>
+        <div class="button" id="retrieveButton">
+            Test retrieve all
+        </div>
+        <div class="button" id="cleanButton">
+            Test 50k remove
+        </div>
+    </div>
+</div>
+</body>
+</html>
