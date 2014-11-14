@@ -1,5 +1,5 @@
 # Octree
->>> JavaScript Octree / Quadtree implementation, with focus on performance
+> JavaScript Octree / Quadtree implementation, with focus on performance
 
 There is still an areas of possible performance improvement.
 
