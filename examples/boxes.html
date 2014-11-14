@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
     <title></title>
-    <script data-main="boxes" type="text/javascript" src="require.js"></script>
+    <script type="text/javascript" src="octree.js"></script>
     <style>
         * {
             padding: 0px;
@@ -42,8 +42,107 @@
 </head>
 <body>
 <div id="debug">
-    checks: <div id="checkcount"></div>
+
 </div>
 <canvas id="canvas" width="1000" height="1000"></canvas>
+
+<script>
+    q = new Octree(8,16,0.00001);
+    var cnv = document.getElementById("canvas");
+    var ctx = cnv.getContext("2d");
+    cnv.width = window.innerWidth;
+    cnv.height = window.innerHeight;
+    var items = [];
+
+    function Cube(x, y, z){
+        var size = 0.0025;
+
+        Octree.Item.call(this, x,y,z,size,size,size);
+
+        this.dir = [Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1];
+
+        this.speed = Math.random() / 100;
+    }
+
+    Cube.prototype = Object.create(Octree.Item.prototype);
+
+    Cube.prototype.dir = [1,0,0];
+
+    Cube.prototype.speed = 0.1;
+
+    Cube.prototype.tick = function(){
+        this.x += this.dir[0] * this.speed;
+        this.y += this.dir[1] * this.speed;
+    };
+
+    function DrawNode(node) {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        ctx.strokeRect((node.x - node.ex) * w, (node.y - node.ey) * h, (node.ex * 2) * w, (node.ey * 2) * h);
+
+        if (node.type === 1) {
+            var nodesMask = node.nodesMask,
+                    keys = Octree.Node.indexToKey, i;
+
+            for (i = 0; i < 8; i++)
+                if (nodesMask & (1 << i))
+                    DrawNode(node[keys[i]]);
+
+        } else {
+            ctx.fillStyle = "black";
+            var items = node.items,
+                    itemsLen, item, j;
+
+            for (j = 0, itemsLen = items.length; j < itemsLen; j++) {
+                item = items[j];
+                ctx.fillRect((item.x - item.ex) * w, (item.y - item.ey) * h, (item.ex * 2) * w, (item.ey * 2) * h);
+            }
+        }
+    }
+
+    function fill() {
+        for (var i = 0; i < 1000; i++) {
+            var item = new Cube(0.5, 0.5, 0.5);
+            items.push(item);
+            q.insert(item);
+        }
+    }
+
+    function updatePoints() {
+        var itemsLen = items.length,
+                item, dir;
+
+        for (var i = 0; i < itemsLen; i++) {
+            item = items[i];
+            dir = item.dir;
+
+            q.remove(item);
+
+            item.tick();
+
+            q.insert(item);
+        }
+    }
+
+    function tick() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        updatePoints();
+        if (q.root !== null)
+            DrawNode(q.root);
+    }
+
+    var t = Date.now();
+
+    function loop() {
+        tick();
+        window.requestAnimationFrame(function () {
+            loop();
+        });
+    }
+
+    fill();
+    loop();
+</script>
 </body>
 </html>

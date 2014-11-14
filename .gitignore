@@ -1,0 +1,7 @@
+.idea
+tmp
+.tmp
+node_modules
+bower_components
+src/bower_components
+dist
